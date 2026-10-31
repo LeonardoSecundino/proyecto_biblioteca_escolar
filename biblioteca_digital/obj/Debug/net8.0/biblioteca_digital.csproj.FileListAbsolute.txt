@@ -1,0 +1,15 @@
+C:\Users\AMD RYZEN\Desktop\proyecto_biblioteca_escolar\proyecto_biblioteca_escolar\biblioteca_digital\bin\Debug\net8.0\biblioteca_digital.exe
+C:\Users\AMD RYZEN\Desktop\proyecto_biblioteca_escolar\proyecto_biblioteca_escolar\biblioteca_digital\bin\Debug\net8.0\biblioteca_digital.deps.json
+C:\Users\AMD RYZEN\Desktop\proyecto_biblioteca_escolar\proyecto_biblioteca_escolar\biblioteca_digital\bin\Debug\net8.0\biblioteca_digital.runtimeconfig.json
+C:\Users\AMD RYZEN\Desktop\proyecto_biblioteca_escolar\proyecto_biblioteca_escolar\biblioteca_digital\bin\Debug\net8.0\biblioteca_digital.dll
+C:\Users\AMD RYZEN\Desktop\proyecto_biblioteca_escolar\proyecto_biblioteca_escolar\biblioteca_digital\bin\Debug\net8.0\biblioteca_digital.pdb
+C:\Users\AMD RYZEN\Desktop\proyecto_biblioteca_escolar\proyecto_biblioteca_escolar\biblioteca_digital\obj\Debug\net8.0\biblioteca_digital.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\AMD RYZEN\Desktop\proyecto_biblioteca_escolar\proyecto_biblioteca_escolar\biblioteca_digital\obj\Debug\net8.0\biblioteca_digital.AssemblyInfoInputs.cache
+C:\Users\AMD RYZEN\Desktop\proyecto_biblioteca_escolar\proyecto_biblioteca_escolar\biblioteca_digital\obj\Debug\net8.0\biblioteca_digital.AssemblyInfo.cs
+C:\Users\AMD RYZEN\Desktop\proyecto_biblioteca_escolar\proyecto_biblioteca_escolar\biblioteca_digital\obj\Debug\net8.0\biblioteca_digital.csproj.CoreCompileInputs.cache
+C:\Users\AMD RYZEN\Desktop\proyecto_biblioteca_escolar\proyecto_biblioteca_escolar\biblioteca_digital\obj\Debug\net8.0\biblioteca_digital.sourcelink.json
+C:\Users\AMD RYZEN\Desktop\proyecto_biblioteca_escolar\proyecto_biblioteca_escolar\biblioteca_digital\obj\Debug\net8.0\biblioteca_digital.dll
+C:\Users\AMD RYZEN\Desktop\proyecto_biblioteca_escolar\proyecto_biblioteca_escolar\biblioteca_digital\obj\Debug\net8.0\refint\biblioteca_digital.dll
+C:\Users\AMD RYZEN\Desktop\proyecto_biblioteca_escolar\proyecto_biblioteca_escolar\biblioteca_digital\obj\Debug\net8.0\biblioteca_digital.pdb
+C:\Users\AMD RYZEN\Desktop\proyecto_biblioteca_escolar\proyecto_biblioteca_escolar\biblioteca_digital\obj\Debug\net8.0\biblioteca_digital.genruntimeconfig.cache
+C:\Users\AMD RYZEN\Desktop\proyecto_biblioteca_escolar\proyecto_biblioteca_escolar\biblioteca_digital\obj\Debug\net8.0\ref\biblioteca_digital.dll
