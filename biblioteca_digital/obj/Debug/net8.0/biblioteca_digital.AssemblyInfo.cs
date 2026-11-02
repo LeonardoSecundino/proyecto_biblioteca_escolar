@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("biblioteca_digital")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+47a56f4223c8915cc9de376fb9f8d5a318c85545")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bb01cdc8f15b7b00d105bfd5b8d67d3ae75002e9")]
 [assembly: System.Reflection.AssemblyProductAttribute("biblioteca_digital")]
 [assembly: System.Reflection.AssemblyTitleAttribute("biblioteca_digital")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

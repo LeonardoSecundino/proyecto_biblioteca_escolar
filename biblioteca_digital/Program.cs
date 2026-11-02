@@ -1,4 +1,6 @@
-﻿namespace biblioteca_digital
+﻿using System.Security.Cryptography.X509Certificates;
+
+namespace biblioteca_digital
 {
     public class Titulo
     {
@@ -51,26 +53,39 @@
                 new Titulo("Don Quijote", "978-8424922498", 8, 2),
                 new Titulo("El Principito", "978-0156013987", 20, 4),
                 new Titulo("1984", "978-0451524935", 5, 3),
-                new Titulo("Ficciones", "978-0307950925", 12, 4),
+                new Titulo("Ficciones", "978-0307950925", 20, 4),
                 new Titulo("Rayuela", "978-8420471832", 7, 2),
-                new Titulo("Pedro Páramo", "978-0802133908", 10, 0),
+                new Titulo("Pedro Páramo", "978-0802133908", 10, 3),
                 new Titulo("La Sombra del Viento", "978-0143034902", 2, 3)
             };
 
-            // Prueba de tres prestamos
-            catalogo[0].RegistrarPrestamo();
-            catalogo[1].RegistrarPrestamo();
-            catalogo[1].RegistrarPrestamo();
-            catalogo[2].RegistrarPrestamo();
-            catalogo[2].RegistrarPrestamo();
-            catalogo[2].RegistrarPrestamo();
-            Console.WriteLine(catalogo[0].PrestamosHistoricos + ", " + catalogo[1].PrestamosHistoricos + ", " + catalogo[2].PrestamosHistoricos); 
-
-            // Verificación de que ningún título queda con celdas vacías
+            OrdenamientoInsercíon(catalogo);
+            foreach (var libro in catalogo)
+            {
+                Console.WriteLine(libro.Nombre);
+            }
+        
             foreach (var libro in catalogo)
             {
                 if (libro.Ejemplares == null || libro.Ejemplares.Length == 0)
                     Console.WriteLine($"Error de estructura en: {libro.Nombre}");
+            }
+        }
+
+        // Ordenamiento de acuerdo a cantidad de prestamos y nombres (A-Z)
+        public static void OrdenamientoInsercíon(List<Titulo> catalogo)
+        {
+            for (int i = 1; i < catalogo.Count; i++)
+            {
+                Titulo actual = catalogo[i];
+                int j = i - 1;
+
+                while (j >= 0 && (catalogo[j].PrestamosHistoricos < actual.PrestamosHistoricos || (catalogo[j].PrestamosHistoricos == actual.PrestamosHistoricos && string.Compare(catalogo[j].Nombre, actual.Nombre) > 0)))
+                {
+                    catalogo[j + 1] = catalogo[j];
+                    j--;
+                }
+                catalogo[j + 1] = actual;
             }
         }
     }
