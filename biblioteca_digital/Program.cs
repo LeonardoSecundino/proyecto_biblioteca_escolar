@@ -71,26 +71,52 @@ namespace biblioteca_digital
                 new Titulo("La Sombra del Viento", "978-0143034902", 2, 3)
             };
 
-            OrdenamientoInsercíon(catalogo);
+            // Mostrar catálogo inicial
+            Console.WriteLine("CATÁLOGO INICIAL");
             foreach (var libro in catalogo)
             {
-                Console.WriteLine(libro.Nombre);
+                Console.WriteLine($"{libro.Nombre} - Disponibles: {libro.CalcularDisponibilidad()}");
             }
-        
+
+            // Simular tres préstamos
+            catalogo[0].RegistrarPrestamo();
+            catalogo[1].RegistrarPrestamo();
+            catalogo[4].RegistrarPrestamo();
+
+            // Mostrar catálogo después de los préstamos
+            Console.WriteLine("\nCATÁLOGO DESPUÉS DE PRÉSTAMOS");
+            foreach (var libro in catalogo)
+            {
+                Console.WriteLine($"{libro.Nombre} - Disponibles: {libro.CalcularDisponibilidad()}");
+            }
+
+            // Ordenar catálogo principal por número de préstamos
+            OrdenamientoInsercíon(catalogo);
+            Console.WriteLine("\nCATÁLOGO ORDENADO POR PRÉSTAMOS (MAYOR A MENOR)");
+            foreach (var libro in catalogo)
+            {
+                Console.WriteLine($"{libro.Nombre} - Préstamos: {libro.PrestamosHistoricos}");
+            }
+
             foreach (var libro in catalogo)
             {
                 if (libro.Ejemplares == null || libro.Ejemplares.Length == 0)
                     Console.WriteLine($"Error de estructura en: {libro.Nombre}");
             }
 
-            BuscarPorTitulo(catalogo, "Don Quijote");
-            BuscarPorTitulo(catalogo, "don quijote");
-
-            //Hacemos una copia del catalogo para que esta esté ordenada por ISBN
+            // Integración de Búsquedas
+            // Crear copia y ordenarla por ISBN para la búsqueda binaria
+           
             OrdenarPorISBN(catalogoCopia);
 
-            BuscarPorISBN(catalogoCopia, "978-0156013987");
-            BuscarPorISBN(catalogoCopia, "978-0143034902");
+            Console.WriteLine("\nRESULTADOS DE BÚSQUEDA");
+            Titulo busqueda1 = BuscarPorISBN(catalogoCopia, "978-0156013987");
+            Console.WriteLine(busqueda1 != null ? $"ISBN Encontrado: {busqueda1.Nombre}" : "ISBN no encontrado");
+
+            Titulo busqueda2 = BuscarPorTitulo(catalogo, "1984");
+            Console.WriteLine(busqueda2 != null ? $"Título Encontrado: {busqueda2.ISBN}" : "Título no encontrado");
+
+
         }
 
         // Ordenamiento de acuerdo a cantidad de prestamos y nombres (A-Z)
