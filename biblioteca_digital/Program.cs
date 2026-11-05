@@ -58,94 +58,141 @@ namespace biblioteca_digital
                 new Titulo("Pedro Páramo", "978-0802133908", 10, 3),
                 new Titulo("La Sombra del Viento", "978-0143034902", 2, 3)
             };
-
-            List<Titulo> catalogoCopia = new List<Titulo>
-            {
-                new Titulo("Cien Años de Soledad", "978-0307474728", 15, 5),
-                new Titulo("Don Quijote", "978-8424922498", 8, 2),
-                new Titulo("El Principito", "978-0156013987", 20, 4),
-                new Titulo("1984", "978-0451524935", 5, 3),
-                new Titulo("Ficciones", "978-0307950925", 20, 4),
-                new Titulo("Rayuela", "978-8420471832", 7, 2),
-                new Titulo("Pedro Páramo", "978-0802133908", 10, 3),
-                new Titulo("La Sombra del Viento", "978-0143034902", 2, 3)
-            };
-
-            // Mostrar catálogo inicial
-            Console.WriteLine("CATÁLOGO INICIAL");
-            foreach (var libro in catalogo)
-            {
-                Console.WriteLine($"{libro.Nombre} - Disponibles: {libro.CalcularDisponibilidad()}");
-            }
-
-            // Simular tres préstamos
-            catalogo[0].RegistrarPrestamo();
-            catalogo[1].RegistrarPrestamo();
-            catalogo[4].RegistrarPrestamo();
-
-            // Mostrar catálogo después de los préstamos
-            Console.WriteLine("\nCATÁLOGO DESPUÉS DE PRÉSTAMOS");
-            foreach (var libro in catalogo)
-            {
-                Console.WriteLine($"{libro.Nombre} - Disponibles: {libro.CalcularDisponibilidad()}");
-            }
-
-            // Ordenar catálogo principal por número de préstamos
-            OrdenamientoInsercíon(catalogo);
-            Console.WriteLine("\nCATÁLOGO ORDENADO POR PRÉSTAMOS (MAYOR A MENOR)");
-            foreach (var libro in catalogo)
-            {
-                Console.WriteLine($"{libro.Nombre} - Préstamos: {libro.PrestamosHistoricos}");
-            }
-
-            foreach (var libro in catalogo)
-            {
-                if (libro.Ejemplares == null || libro.Ejemplares.Length == 0)
-                    Console.WriteLine($"Error de estructura en: {libro.Nombre}");
-            }
-
-            // Integración de Búsquedas
-            // Crear copia y ordenarla por ISBN para la búsqueda binaria
-           
+            List<Titulo> catalogoCopia = catalogo;
             OrdenarPorISBN(catalogoCopia);
-            int misComparaciones;
-
-            Console.WriteLine("\nRESULTADOS DE BÚSQUEDA");
-            Titulo busqueda1 = BuscarPorISBN(catalogoCopia, "978-0156013987", out misComparaciones);
-            Console.WriteLine(busqueda1 != null ? $"ISBN Encontrado: {busqueda1.Nombre}" : "ISBN no encontrado");
-
-            Titulo busqueda2 = BuscarPorTitulo(catalogo, "1984");
-            Console.WriteLine(busqueda2 != null ? $"Título Encontrado: {busqueda2.ISBN}" : "Título no encontrado");
-
-
-            string[] arregloISBN = new string[catalogoCopia.Count];
-            for (int i = 0; i < catalogoCopia.Count; i++)
+            bool salir = false;
+            do
             {
-                arregloISBN[i] = catalogoCopia[i].ISBN;
-            }
-            
-            string[] isbnConsulta = new string[5];
-            isbnConsulta[0] = "978-0156013987";
-            isbnConsulta[1] = "978-0143034902";
-            isbnConsulta[2] = "978-0307474728";
-            isbnConsulta[3] = "978-0156023487";
-            isbnConsulta[4] = "978-0156013677";
-            
-            // Consultas de prueba 
-            for (int n = 0; n<=4; n++)
-            {
-                string isbnconsulta = isbnConsulta[n];
-                Titulo miResultado = BuscarPorISBN(catalogoCopia, isbnconsulta, out misComparaciones);
-                int indiceNativo = Array.BinarySearch(arregloISBN, isbnconsulta);
+                Console.Clear();
+                Console.WriteLine("=================================================");
+                Console.WriteLine("      SISTEMA DE BIBLIOTECA ESCOLAR v1.0");
+                Console.WriteLine("=================================================");
+                Console.WriteLine("1. Mostrar catálogo ordenado (Mayor a menor préstamos)");
+                Console.WriteLine("2. Registrar un préstamo");
+                Console.WriteLine("3. Buscar libro por Título");
+                Console.WriteLine("4. Buscar libro por ISBN (Búsqueda Binaria)");
+                Console.WriteLine("5. Ejecutar prueba de rendimiento Array.BinarySearch");
+                Console.WriteLine("6. Salir");
+                Console.WriteLine("=================================================");
+                Console.Write("Seleccione una opción: ");
 
-                Console.WriteLine($"\nBuscando: {isbnconsulta}");
-                Console.WriteLine($"Mi búsqueda tomó {misComparaciones} comparaciones.");
-                Console.WriteLine(indiceNativo >= 0 ? "Verificación: Array.BinarySearch lo encontró en el índice " + indiceNativo : "Verificación: Array.BinarySearch NO lo encontró");
-            } 
+                string opcion = Console.ReadLine();
+                Console.WriteLine();
+
+                switch (opcion)
+                {
+                    case "1":
+                        // Se aplica el ordenamiento manual por inserción
+                        OrdenamientoInsercion(catalogo);
+                        Console.WriteLine("--- CATÁLOGO ORDENADO POR PRÉSTAMOS ---");
+                        foreach (var libro in catalogo)
+                        {
+                            Console.WriteLine($"- {libro.Nombre} | Préstamos históricos: {libro.PrestamosHistoricos} | Disponibles: {libro.CalcularDisponibilidad()}");
+                        }
+                        break;
+
+                    case "2":
+                        Console.WriteLine("--- REGISTRAR PRÉSTAMO ---");
+                        for (int i = 0; i < catalogo.Count; i++)
+                        {
+                            Console.WriteLine($"{i + 1}. {catalogo[i].Nombre} (Disponibles: {catalogo[i].CalcularDisponibilidad()})");
+                        }
+                        Console.Write("\nIngrese el número del libro que desea prestar: ");
+
+                        if (int.TryParse(Console.ReadLine(), out int indice) && indice >= 1 && indice <= catalogo.Count)
+                        {
+                            Titulo libroSeleccionado = catalogo[indice - 1];
+                            int disponiblesAntes = libroSeleccionado.CalcularDisponibilidad();
+                            int prestamosAntes = libroSeleccionado.PrestamosHistoricos;
+
+                            Console.WriteLine($"\nESTADO ANTERIOR -> Disponibles: {disponiblesAntes} | Préstamos históricos: {prestamosAntes}");
+
+                            if (libroSeleccionado.RegistrarPrestamo())
+                            {
+                                Console.WriteLine("¡Préstamo registrado con éxito!");
+                                Console.WriteLine($"ESTADO ACTUAL   -> Disponibles: {libroSeleccionado.CalcularDisponibilidad()} | Préstamos históricos: {libroSeleccionado.PrestamosHistoricos}");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Préstamo denegado: No hay ejemplares disponibles en este momento.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Opción inválida. Intente de nuevo.");
+                        }
+                        break;
+
+                    case "3":
+                        Console.WriteLine("--- BÚSQUEDA POR TÍTULO ---");
+                        Console.Write("Ingrese el título exacto a buscar: ");
+                        string tituloBuscado = Console.ReadLine();
+                        Titulo resultadoTitulo = BuscarPorTitulo(catalogo, tituloBuscado);
+
+                        if (resultadoTitulo != null)
+                        {
+                            Console.WriteLine($"\n¡Libro encontrado!\nNombre: {resultadoTitulo.Nombre}\nISBN: {resultadoTitulo.ISBN}\nDisponibles: {resultadoTitulo.CalcularDisponibilidad()}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nEl libro no se encuentra en el catálogo.");
+                        }
+                        break;
+
+                    case "4":
+                        Console.WriteLine("--- BÚSQUEDA POR ISBN ---");
+                        Console.Write("Ingrese el ISBN a buscar (Ej. 978-0156013987): ");
+                        string isbnBuscado = Console.ReadLine();
+
+                        Titulo resultadoISBN = BuscarPorISBN(catalogoCopia, isbnBuscado, out int comparaciones);
+
+                        if (resultadoISBN != null)
+                        {
+                            Console.WriteLine($"\n¡ISBN encontrado en {comparaciones} intentos!\nNombre: {resultadoISBN.Nombre}\nPréstamos Históricos: {resultadoISBN.PrestamosHistoricos}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"\nISBN no encontrado. La búsqueda tomó {comparaciones} intentos para confirmarlo.");
+                        }
+                        break;
+
+                    case "5":
+                        Console.WriteLine("--- PRUEBA DE RENDIMIENTO (DÍA 7) ---");
+                        string[] arregloISBN = new string[catalogoCopia.Count];
+                        for (int i = 0; i < catalogoCopia.Count; i++) arregloISBN[i] = catalogoCopia[i].ISBN;
+
+                        string[] isbnConsultas = { "978-0156013987", "978-0143034902", "978-0307474728", "978-0156023487", "978-0156013677" };
+
+                        foreach (string consulta in isbnConsultas)
+                        {
+                            BuscarPorISBN(catalogoCopia, consulta, out int intentosMiBusqueda);
+                            int indiceNativo = Array.BinarySearch(arregloISBN, consulta);
+
+                            Console.WriteLine($"ISBN: {consulta,-15} | Mi Algoritmo: {intentosMiBusqueda} comp. | Array.BinarySearch: {(indiceNativo >= 0 ? "Encontrado" : "No Encontrado")}");
+                        }
+                        break;
+
+                    case "6":
+                        salir = true;
+                        Console.WriteLine("Cerrando el sistema...");
+                        break;
+
+                    default:
+                        Console.WriteLine("Opción no válida. Presione cualquier tecla para continuar.");
+                        break;
+                }
+
+                if (!salir)
+                {
+                    Console.WriteLine("\nPresione cualquier tecla para volver al menú...");
+                    Console.ReadKey();
+                }
+
+            } while (!salir);
         }
 
         // Ordenamiento de acuerdo a cantidad de prestamos y nombres (A-Z)
-        public static void OrdenamientoInsercíon(List<Titulo> catalogo)
+        public static void OrdenamientoInsercion(List<Titulo> catalogo)
         {
             for (int i = 1; i < catalogo.Count; i++)
             {
