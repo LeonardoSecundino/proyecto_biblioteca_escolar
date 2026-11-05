@@ -108,15 +108,40 @@ namespace biblioteca_digital
             // Crear copia y ordenarla por ISBN para la búsqueda binaria
            
             OrdenarPorISBN(catalogoCopia);
+            int misComparaciones;
 
             Console.WriteLine("\nRESULTADOS DE BÚSQUEDA");
-            Titulo busqueda1 = BuscarPorISBN(catalogoCopia, "978-0156013987");
+            Titulo busqueda1 = BuscarPorISBN(catalogoCopia, "978-0156013987", out misComparaciones);
             Console.WriteLine(busqueda1 != null ? $"ISBN Encontrado: {busqueda1.Nombre}" : "ISBN no encontrado");
 
             Titulo busqueda2 = BuscarPorTitulo(catalogo, "1984");
             Console.WriteLine(busqueda2 != null ? $"Título Encontrado: {busqueda2.ISBN}" : "Título no encontrado");
 
 
+            string[] arregloISBN = new string[catalogoCopia.Count];
+            for (int i = 0; i < catalogoCopia.Count; i++)
+            {
+                arregloISBN[i] = catalogoCopia[i].ISBN;
+            }
+            
+            string[] isbnConsulta = new string[5];
+            isbnConsulta[0] = "978-0156013987";
+            isbnConsulta[1] = "978-0143034902";
+            isbnConsulta[2] = "978-0307474728";
+            isbnConsulta[3] = "978-0156023487";
+            isbnConsulta[4] = "978-0156013677";
+            
+            // Consultas de prueba 
+            for (int n = 0; n<=4; n++)
+            {
+                string isbnconsulta = isbnConsulta[n];
+                Titulo miResultado = BuscarPorISBN(catalogoCopia, isbnconsulta, out misComparaciones);
+                int indiceNativo = Array.BinarySearch(arregloISBN, isbnconsulta);
+
+                Console.WriteLine($"\nBuscando: {isbnconsulta}");
+                Console.WriteLine($"Mi búsqueda tomó {misComparaciones} comparaciones.");
+                Console.WriteLine(indiceNativo >= 0 ? "Verificación: Array.BinarySearch lo encontró en el índice " + indiceNativo : "Verificación: Array.BinarySearch NO lo encontró");
+            } 
         }
 
         // Ordenamiento de acuerdo a cantidad de prestamos y nombres (A-Z)
@@ -159,21 +184,23 @@ namespace biblioteca_digital
             {
                 if (catalogo[i].Nombre.ToLower() == tituloBuscado.ToLower())
                 {
-                    Console.WriteLine($"Libro {catalogo[i].Nombre} encontrado");
+                    // Console.WriteLine($"Libro {catalogo[i].Nombre} encontrado");
                     return catalogo[i]; 
                 }
             }
-            Console.WriteLine("Libro no encontrado");
+            // Console.WriteLine("Libro no encontrado");
             return null; 
         }
 
-        public static Titulo BuscarPorISBN(List<Titulo> catalogo, string isbnBuscado)
+        public static Titulo BuscarPorISBN(List<Titulo> catalogo, string isbnBuscado, out int comparaciones)
         {
             int inicio = 0;
             int fin = catalogo.Count - 1;
+            comparaciones = 0;
 
             while (inicio <= fin)
             {
+                comparaciones++;
                 // Cálculo del punto medio
                 int medio = (inicio + fin) / 2;
 
@@ -182,7 +209,7 @@ namespace biblioteca_digital
 
                 if (comparacion == 0)
                 {
-                    Console.WriteLine($"Coincidencia encontrada con el ISBN {isbnBuscado}");
+                    // Console.WriteLine($"Coincidencia encontrada con el ISBN {isbnBuscado}");
                     return catalogo[medio];
                 }
                 else if (comparacion < 0)
@@ -191,7 +218,7 @@ namespace biblioteca_digital
                 else
                     fin = medio - 1; // Buscar en la mitad izquierda
             }
-            Console.WriteLine("No se encontró coincidencias");
+            // Console.WriteLine("No se encontró coincidencias");
             return null; 
         }
     }
